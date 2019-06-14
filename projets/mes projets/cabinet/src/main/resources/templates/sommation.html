@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="head :: tetelien">
+
+  
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+   <ul th:replace="siderbar :: sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        
+        <nav th:replace="header :: topbar"></nav>
+        
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800 text-center"><u>Tableau des Sommations</u></h1>
+         
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <a class="btn btn-primary align-right" href="#" data-toggle="modal" data-target="#modalajouter">Ajouter</a><a href="/downloadExcel" class="btn btn-info">Excel</a> <a class="btn btn-warning text-left" href="/sommationarchive.asp">Corbeille</a>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                     <th>Reference</th>
+                      
+                      <th>Nom Requerant</th>
+                      <th>Nom Accussé</th>
+                      <th>status</th>
+                      <th>Actions</th>
+                    <!-- @{/{id}(id=${req.id})} route de la modification vers une autre page -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="sommationDto:${listesommationDTO}">
+                    <td th:text="${sommationDto.reference}"></td>
+                     
+                      <td th:text="${sommationDto.req_nom}"></td>
+                      <td th:text="${sommationDto.acc_nom}"></td>
+                      <td th:text="${sommationDto.status}"></td>
+                      <td class="text-center"><a data-toggle="modal"   data-target="#modal-toTrash"
+                                           th:attr="data-target='#modal-toaff'+${sommationDto.reference}" class="btn btn-primary"><i class="fas fa-print"></i></a><a href="" data-toggle="modal"   data-target="#modal-toTrash"
+                                           th:attr="data-target='#modal-toTrash'+${sommationDto.reference}"      class="btn btn-success"><i class="fa fa-edit"></i></a><a th:href="@{/arch/{i}(i=${sommationDto.id})}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                    
+                  
+                  
+                  
+                  
+              
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                    <!-- Ajout Requerant-->
+  <div class="modal fade"  th:id="modal-toTrash+${sommationDto.reference}"   tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" th:text="${sommationDto.reference}">Ajout d'un Requerant </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        
+           
+                  <p>Tous les champs (*) sont obligatoires. loiasse</p>
+                  <form  th:method="POST" th:action="@{/sr/{id}(id=${sommationDto.id})}" th:object="${sommationDto}"  class="probootstrap-form">
+                   <h4 class="text-center">informations du requerant</h4>
+                    <div class="form-group">
+                      <label for="req_nom">Nom Requerant *</label>
+                      <input type="text"  class="form-control" id="req_nom" name="req_nom" th:value="${sommationDto.req_nom}">
+                    </div>
+                    <div class="form-group">
+                      <label for="req_prenom">Prenom Requerant *</label>
+                      <input type="text"  class="form-control" id="req_prenom" name="req_prenom" th:value="${sommationDto.req_prenom}">
+                    </div>
+                    <div class="form-group">
+                      <label for="req_tel">Telephone Requerant *</label>
+                      <input type="text"  class="form-control" id="req_tel" name="req_tel" th:value="${sommationDto.req_tel}">
+                    </div>
+                   
+                    <div class="form-group">
+                      <label for="req_quartier">Quartier Requerant *</label>
+                      <input type="text"  class="form-control" id="req_quartier" name="req_quartier" th:value="${sommationDto.req_quartier}">
+                    </div>
+                    <h4 class="text-center">informations du Accusse</h4>
+                     <div class="form-group">
+                      <label for="acc_nom">Nom Accussé *</label>
+                      <input type="text"  class="form-control" id="acc_nom" name="acc_nom" th:value="${sommationDto.acc_nom}">
+                    </div>
+                    <div class="form-group">
+                      <label for="acc_prenom">Prenom Accussé *</label>
+                      <input type="text"  class="form-control" id="acc_prenom" name="acc_prenom" th:value="${sommationDto.acc_prenom}">
+                    </div>
+                    <div class="form-group">
+                      <label for="acc_tel">Telephone Accussé *</label>
+                      <input type="text"  class="form-control" id="acc_tel" name="acc_tel" th:value="${sommationDto.acc_tel}">
+                    </div>
+                   
+                    <div class="form-group">
+                      <label for="acc_quartier">Quartier Accussé *</label>
+                      <input type="text"  class="form-control" id="acc_quartier" name="acc_quartier" th:value="${sommationDto.acc_quartier}">
+                    </div>
+                    <h4 class="text-center">Autres informations</h4>
+                    
+                    <div class="form-group">
+                      <label for="reference">Referance *</label>
+                      <input type="text"  class="form-control" id="reference" name="reference" th:value="${sommationDto.reference}">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="motif">Motif *</label>
+                      <input type="textarea"  class="form-control" id="motif" name="motif" th:value="${sommationDto.motif}">
+                    </div>
+                   
+                   
+          
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal"><span class="fa fa-close"></span>Fermer</button>
+           <input type="submit" class="btn btn-success" id="submit" name="submit" value="Valider">
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+              
+              
+               <!-- Modal afficher -->
+  
+                    
+                     
+                     
+                    </tr>
+                  
+                   
+                   
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+     <footer th:replace="footer :: footerbar"></footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Logout Modal-->
+  <div class="modal fade" id="modalajouter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ajout d'un Requerant</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        
+           
+                  <p>Tous les champs (*) sont obligatoires.</p>
+                  <form  th:method="POST" th:action="@{/creersommation}" th:object="${sommationDto}"  class="probootstrap-form">
+                    <div class="form-group">
+                      <label for="req_nom">Nom *</label>
+                      <input type="text" th:field="*{req_nom}" class="form-control" id="nom" name="nom">
+                    </div>
+                    <div class="form-group">
+                      <label for="req_prenom">Prenom *</label>
+                      <input type="text" th:field="*{req_prenom}" class="form-control" id="prenom" name="prenom">
+                    </div>
+                    <div class="req_form-group">
+                      <label for="tel">Telephone *</label>
+                      <input type="text" th:field="*{req_tel}" class="form-control" id="domaine" name="domaine">
+                    </div>
+                   
+                    <div class="req_form-group">
+                      <label for="quartier">Quartier *</label>
+                      <input type="text" th:field="*{req_quartier}" class="form-control" id="village" name="village">
+                    </div>
+                   
+                   
+                   
+                   
+                   
+                   
+                    <h4 class="text-center">informations du requerant</h4>
+                     <div class="form-group">
+                      <label for="acc_nom">Nom Accussé *</label>
+                      <input type="text" th:field="*{acc_nom}"  class="form-control" id="acc_nom" name="acc_nom">
+                    </div>
+                    <div class="form-group">
+                      <label for="acc_prenom">Prenom Accussé *</label>
+                      <input type="text" th:field="*{acc_prenom}" class="form-control" id="acc_prenom" name="acc_prenom">
+                    </div>
+                    <div class="form-group">
+                      <label for="acc_tel">Telephone Accussé *</label>
+                      <input type="text" th:field="*{acc_tel}" class="form-control" id="acc_tel" name="acc_tel">
+                    </div>
+                   
+                    <div class="form-group">
+                      <label for="acc_quartier">Quartier Accussé *</label>
+                      <input type="text"  th:field="*{acc_quartier}" class="form-control" id="acc_quartier" name="acc_quartier">
+                    </div>
+                    <h4 class="text-center">Autres informations</h4>
+                    
+                    <div class="form-group">
+                      <label for="reference">Referance *</label>
+                      <input type="text" th:field="*{reference}"  class="form-control" id="reference" name="reference">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="motif">Motif *</label>
+                      <input type="text" th:field="*{motif}"  class="form-control" id="motif" name="motif">
+                    </div>
+                   
+                    
+                    <div class="form-group">
+                     
+                    </div>
+                  
+                
+          
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-dismiss="modal"><span class="fa fa-close"></span>Fermer</button>
+           <input type="submit" class="btn btn-success" id="submit" name="submit" value="Valider">
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+ 
+<script type="text/javascript">
+function OnSubmitForm()
+{
+   var id = document.getElementById("id").value;
+   document.userform.action="s/"+id;
+   return true;
+}
+</script>
+</body>
+
+
+</html>
